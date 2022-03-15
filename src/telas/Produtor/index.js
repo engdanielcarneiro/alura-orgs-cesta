@@ -30,7 +30,9 @@ export default function Produtor() {
   return (
     <FlatList
       data={cestas}
-      renderItem={({item}) => <Cesta {...item} produtor={{nome, imagem}} />}
+      renderItem={({item}) => (
+        <Cesta {...item} produtor={{nome, imagem, cestas}} />
+      )}
       style={estilos.lista}
       ListHeaderComponent={TopoLista}
     />
