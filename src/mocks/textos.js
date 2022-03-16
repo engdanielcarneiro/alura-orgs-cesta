@@ -9,7 +9,7 @@ const textos = {
   botaoComprar: 'Comprar',
   tituloItens: 'Itens da cesta',
   mensagemCompra:
-    'Agradecemos pela compra da cesta $NOME, seu pedido chegará em breve.',
+    'Agradecemos pela compra da cesta $NOME. Seu pedido chegará em breve.',
   tituloPedidoFeito: 'Pedido feito com sucesso!',
   mensagemPrincipalPedidoFeito: 'Parabéns!',
   botaoHomePedidoFeito: 'Voltar a Home',

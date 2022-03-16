@@ -1,6 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import sucesso from '../assets/sucesso.png';
 import Texto from '../componentes/Texto';
 import useTextos from '../hooks/useTextos';
 
@@ -13,36 +14,56 @@ export default function PedidoFeito() {
   } = useTextos();
   const navigation = useNavigation();
   const route = useRoute();
-  const produtor = route.params;
+  const {produtor, compra} = route.params;
+  const nomeCesta = compra.nome;
+  const mensagemCompleta = mensagemCompra?.replace('$NOME', nomeCesta);
 
   return (
-    <View style={estilos.conteudo}>
-      <Texto style={estilos.principal}>{mensagemPrincipalPedidoFeito}</Texto>
-      <Texto style={estilos.compra}>{mensagemCompra}</Texto>
-      <TouchableOpacity
-        style={estilos.botaoHome}
-        onPress={() => {
-          navigation.navigate('HomeScreen');
-        }}>
-        <Texto style={estilos.textoBotaoHome}>{botaoHomePedidoFeito}</Texto>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={estilos.botaoProdutor}
-        onPress={() => {
-          navigation.navigate('Produtor', produtor);
-        }}>
-        <Texto style={estilos.textoBotaoProdutor}>
-          {botaoProdutorPedidoFeito}
-        </Texto>
-      </TouchableOpacity>
+    <View style={estilos.tela}>
+      <View style={estilos.conteudo}>
+        <Image style={estilos.sucesso} source={sucesso} />
+        <View style={estilos.textos}>
+          <Texto style={estilos.principal}>
+            {mensagemPrincipalPedidoFeito}
+          </Texto>
+          <Texto style={estilos.compra}>{mensagemCompleta}</Texto>
+          <TouchableOpacity
+            style={estilos.botao}
+            onPress={() => {
+              navigation.navigate('HomeScreen');
+            }}>
+            <Texto style={estilos.textoBotao}>{botaoHomePedidoFeito}</Texto>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[estilos.botao, estilos.botaoProdutor]}
+            onPress={() => {
+              navigation.navigate('Produtor', produtor);
+            }}>
+            <Texto style={[estilos.textoBotao, estilos.textoBotaoProdutor]}>
+              {botaoProdutorPedidoFeito}
+            </Texto>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 }
 
 const estilos = StyleSheet.create({
+  tela: {
+    flex: 1,
+    backgroundColor: '#FFF',
+  },
   conteudo: {
+    zIndex: 0,
+  },
+  sucesso: {
+    width: '100%',
+    height: undefined,
+    aspectRatio: 360 / 300,
+  },
+  textos: {
     paddingHorizontal: 16,
-    paddingVertical: 27,
   },
   principal: {
     fontWeight: 'bold',
@@ -55,39 +76,25 @@ const estilos = StyleSheet.create({
     lineHeight: 26,
     color: '#A3A3A3',
   },
-  botaoHome: {
-    backgroundColor: '#2A9F85',
-    width: '100%',
-    height: 58,
-    borderRadius: 6,
-    padding: 16,
-    alignItems: 'center',
+  botao: {
     marginTop: 16,
+    backgroundColor: '#2A9F85',
+    paddingVertical: 16,
+    borderRadius: 6,
   },
-  textoBotaoHome: {
+  textoBotao: {
+    textAlign: 'center',
     fontWeight: 'bold',
+    color: '#ffffff',
     fontSize: 16,
     lineHeight: 26,
-    textAlign: 'center',
-    color: '#FFFFFF',
   },
   botaoProdutor: {
-    backgroundColor: '#FFFFFF',
-    width: '100%',
-    height: 58,
-    borderRadius: 6,
-    padding: 16,
-    alignItems: 'center',
-    borderStyle: 'solid',
+    backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#ECECEC',
-    marginTop: 16,
   },
   textoBotaoProdutor: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    lineHeight: 26,
-    textAlign: 'center',
     color: '#464646',
   },
 });
