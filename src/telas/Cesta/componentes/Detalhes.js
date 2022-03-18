@@ -25,7 +25,7 @@ export default function Detalhes({nome, produtor, descricao, preco}) {
           //   compra: {nome, timestamp: +new Date()},
           //   // compra: {nome, timestamp: new Date().valueOf()}, '+' means this .valueOf()
           // });
-          navigation.navigate('PedidoFeito', {produtor, compra: {nome}});
+          navigation.navigate('PedidoFeito', {compra: {nome}});
         }}>
         <Texto style={estilos.textoBotao}>{botaoComprar}</Texto>
       </TouchableOpacity>

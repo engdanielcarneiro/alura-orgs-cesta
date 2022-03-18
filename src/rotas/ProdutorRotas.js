@@ -18,10 +18,10 @@ export default function ProdutorRotas({ComponentePrincipal = Home}) {
       <Stack.Screen
         name="PedidoFeito"
         component={PedidoFeito}
-        options={{
-          headerShown: true,
-          title: tituloPedidoFeito,
-        }}
+        // options={{
+        //   headerShown: true,
+        //   title: tituloPedidoFeito,
+        // }}
       />
     </Stack.Navigator>
   );

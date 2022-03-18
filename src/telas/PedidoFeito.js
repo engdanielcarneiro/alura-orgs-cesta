@@ -1,12 +1,14 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import sucesso from '../assets/sucesso.png';
+import VoltarSvg from '../assets/voltar.svg';
 import Texto from '../componentes/Texto';
 import useTextos from '../hooks/useTextos';
 
 export default function PedidoFeito() {
   const {
+    tituloPedidoFeito,
     mensagemPrincipalPedidoFeito,
     mensagemCompra,
     botaoHomePedidoFeito,
@@ -14,12 +16,20 @@ export default function PedidoFeito() {
   } = useTextos();
   const navigation = useNavigation();
   const route = useRoute();
-  const {produtor, compra} = route.params;
+  const {compra} = route.params;
   const nomeCesta = compra.nome;
   const mensagemCompleta = mensagemCompra?.replace('$NOME', nomeCesta);
 
   return (
     <View style={estilos.tela}>
+      <View style={estilos.topo}>
+        <TouchableOpacity
+          style={estilos.topoVoltar}
+          onPress={() => navigation.goBack()}>
+          <VoltarSvg />
+        </TouchableOpacity>
+        <Texto style={estilos.topoTexto}>{tituloPedidoFeito}</Texto>
+      </View>
       <View style={estilos.conteudo}>
         <Image style={estilos.sucesso} source={sucesso} />
         <View style={estilos.textos}>
@@ -30,18 +40,18 @@ export default function PedidoFeito() {
           <TouchableOpacity
             style={estilos.botao}
             onPress={() => {
-              navigation.navigate('HomeScreen');
+              navigation.popToTop();
             }}>
             <Texto style={estilos.textoBotao}>{botaoHomePedidoFeito}</Texto>
           </TouchableOpacity>
           <TouchableOpacity
             style={[estilos.botao, estilos.botaoProdutor]}
             onPress={() => {
-              navigation.navigate('Produtor', produtor);
+              navigation.pop(2);
             }}>
-            <Texto style={[estilos.textoBotao, estilos.textoBotaoProdutor]}>
+            <Text style={[estilos.textoBotao, estilos.textoBotaoProdutor]}>
               {botaoProdutorPedidoFeito}
-            </Texto>
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -53,6 +63,42 @@ const estilos = StyleSheet.create({
   tela: {
     flex: 1,
     backgroundColor: '#FFF',
+  },
+  topo: {
+    zIndex: 1,
+    position: 'absolute',
+    width: '100%',
+    height: 58,
+
+    backgroundColor: '#FFF',
+
+    //Android
+    elevation: 5,
+
+    //IOS
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    paddingVertical: 16,
+    paddingHorizontal: 40,
+  },
+  topoTexto: {
+    fontSize: 16,
+    lineHeight: 26,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  topoVoltar: {
+    width: 24,
+    height: 24,
+    position: 'absolute',
+    left: 16,
+    top: 17,
   },
   conteudo: {
     zIndex: 0,
